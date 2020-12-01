@@ -29,7 +29,7 @@ public class Main {
             return integers;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -41,7 +41,7 @@ public class Main {
      */
     private static int getIntegerPairWithSumAndReturnTheirProduct(int sum, List<Integer> integers) {
         for (int i = 0; i < integers.size(); i++) {
-            for (int j = 0; j < integers.size(); j++) {
+            for (int j = i; j < integers.size(); j++) {
                 if (i != j && integers.get(i) + integers.get(j) == sum) {
                     return integers.get(i) * integers.get(j);
                 }
@@ -58,8 +58,8 @@ public class Main {
      */
     private static int getThreeIntegersWithSumAndReturnTheirProduct(int sum, List<Integer> integers) {
         for (int i = 0; i < integers.size(); i++) {
-            for (int j = 0; j < integers.size(); j++) {
-                for (int k = 0; k < integers.size(); k++) {
+            for (int j = i; j < integers.size(); j++) {
+                for (int k = j; k < integers.size(); k++) {
                     if (i != j && j != k && integers.get(i) + integers.get(j) + integers.get(k) == sum) {
                         return integers.get(i) * integers.get(j) * integers.get(k);
                     }
