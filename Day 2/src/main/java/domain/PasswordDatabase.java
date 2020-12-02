@@ -14,7 +14,16 @@ public class PasswordDatabase {
         this.passwords = passwords;
     }
 
-    public long amountOfValid() {
-        return passwords.stream().filter(Password::isValid).count();
+    public boolean add(Password password) {
+        if (password.isValid()) {
+            passwords.add(password);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int size() {
+        return passwords.size();
     }
 }

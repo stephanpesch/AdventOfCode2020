@@ -5,6 +5,6 @@ public class Main {
         PasswordDatabase database = PasswordDatabaseFactory.loadFromFile("input");
 
         // Solved it, maybe better possible
-        System.out.println(database.amountOfValid());
+        System.out.println(database.size());
     }
 }
