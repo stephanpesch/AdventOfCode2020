@@ -7,25 +7,21 @@ import static org.junit.Assert.assertTrue;
 
 public class PolicyTest {
 
-    private Policy policy;
-
-    @Before
-    public void initialize() {
-        policy = new Policy(6, 7, 'w');
+    @Test
+    public void onePositionContainsRightCharReturnsTrue() {
+        Policy policy = new Policy(1, 3, 'a');
+        assertTrue(policy.isValidPassword("abcde"));
     }
 
     @Test
-    public void returnFalseIfPasswordContainsTooMany() {
-        assertFalse(policy.isValidPassword("wwhwmzwtwwkwzw"));
+    public void noPositionContainsRightCharReturnsFalse() {
+        Policy policy = new Policy(1, 3, 'b');
+        assertFalse(policy.isValidPassword("cdefg"));
     }
 
     @Test
-    public void returnFalseIfPasswordContainsTooLittle() {
-        assertFalse(policy.isValidPassword("wwhmzwtwwk"));
-    }
-
-    @Test
-    public void returnTrueIfPasswordValid() {
-        assertTrue(policy.isValidPassword("wwhmzwtwwkw"));
+    public void bothPositionsContainsRightCarReturnsFalse() {
+        Policy policy = new Policy(2, 9, 'c');
+        assertFalse(policy.isValidPassword("ccccccccc"));
     }
 }
