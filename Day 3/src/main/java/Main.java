@@ -11,12 +11,12 @@ public class Main {
 
         long treesMultiplied = 1;
 
-        for (Toboggan toboggan : toboggans) {
-            int trees = map.amountOfTrees(toboggan);
-            System.out.println(trees);
+        for (int i = 0; i < toboggans.length; i++) {
+            int trees = map.amountOfTrees(toboggans[i]);
+            System.out.printf("Toboggan %d: %d%n", i, trees);
             treesMultiplied *= trees;
         }
 
-        System.out.println(treesMultiplied);
+        System.out.println("All trees multiplied together: " + treesMultiplied);
     }
 }
