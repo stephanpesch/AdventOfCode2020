@@ -17,7 +17,7 @@ public class Plane {
     public void readSeatsFromFile(String name) {
         try (Scanner scanner = new Scanner(Paths.get(name))) {
             while (scanner.hasNext()) {
-                Seat seat = new Seat(scanner.nextLine());
+                Seat seat = new Seat(scanner.nextLine(), rows, columns);
                 seats.put(seat.getID(), seat);
             }
         } catch (IOException e) {

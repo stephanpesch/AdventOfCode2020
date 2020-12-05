@@ -8,8 +8,8 @@ public class Seat {
         this.column = column;
     }
 
-    public Seat(String binarySpacePartitioning) {
-        int[] coordinates = traverse(binarySpacePartitioning, 0, new int[] {0, 127, 0 ,7});
+    public Seat(String binarySpacePartitioning, int rows, int columns) {
+        int[] coordinates = traverse(binarySpacePartitioning, 0, new int[] {0, rows - 1, 0 ,columns - 1});
         this.row = coordinates[0];
         this.column = coordinates[2];
     }
