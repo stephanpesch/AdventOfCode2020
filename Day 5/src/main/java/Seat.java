@@ -36,13 +36,12 @@ public class Seat {
         return traverse(binarySpacePartitioning, index + 1, rowsAndColumns);
     }
 
-    @Override
-    public int hashCode() {
+    public int getID() {
         return row * 8 + column;
     }
 
     @Override
     public String toString() {
-        return String.format("%d, %d: %d", row, column, hashCode());
+        return String.format("%d, %d: %d", row, column, getID());
     }
 }
