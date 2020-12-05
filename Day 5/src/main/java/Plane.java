@@ -14,6 +14,27 @@ public class Plane {
         this.seats = new HashMap<>();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        int max = rows * columns + columns;
+        int maxLength = Integer.toString(max).length(); // There surely is a more efficient way
+        for (int i = 0; i < max; i++) {
+            String IDNumber = String.format("%d%s", i, " ".repeat(maxLength - Integer.toString(i).length()));
+            if (seats.containsKey(i)) {
+                builder.append((char) 27).append("[48;5;0m ").append(IDNumber).append((char) 27).append("[0m");
+            } else {
+                builder.append((char) 27).append("[48;5;1m ").append(IDNumber).append((char) 27).append("[0m");
+            }
+            if ((i + 1) % columns == 0) {
+                builder.append("\n");
+            }
+        }
+        return builder.toString();
+    }
+
+
+
     public void readSeatsFromFile(String name) {
         try (Scanner scanner = new Scanner(Paths.get(name))) {
             while (scanner.hasNext()) {

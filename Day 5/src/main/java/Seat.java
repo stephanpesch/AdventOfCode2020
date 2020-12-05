@@ -2,13 +2,19 @@ public class Seat {
 
     private int row;
     private int column;
+    private int rows;
+    private int columns;
 
-    public Seat(int row, int column) {
+    public Seat(int row, int column, int rows, int columns) {
         this.row = row;
         this.column = column;
+        this.rows = rows;
+        this.columns = columns;
     }
 
     public Seat(String binarySpacePartitioning, int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
         int[] coordinates = traverse(binarySpacePartitioning, 0, new int[] {0, rows - 1, 0 ,columns - 1});
         this.row = coordinates[0];
         this.column = coordinates[2];
@@ -37,7 +43,7 @@ public class Seat {
     }
 
     public int getID() {
-        return row * 8 + column;
+        return row * columns + column;
     }
 
     @Override
