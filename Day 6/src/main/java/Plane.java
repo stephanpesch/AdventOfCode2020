@@ -1,9 +1,9 @@
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Plane {
 
@@ -28,7 +28,7 @@ public class Plane {
                     group = new Group();
                     continue;
                 }
-                group.addAnswers(charArrayToList(line.toCharArray()));
+                group.retainAnswers(line.chars().mapToObj(x -> (char) x).collect(Collectors.toSet()));
             }
         } catch (IOException e) {
             e.printStackTrace();

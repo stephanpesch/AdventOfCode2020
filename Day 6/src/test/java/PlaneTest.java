@@ -14,6 +14,6 @@ public class PlaneTest {
 
     @Test
     public void hasSumOfCountsEleven() {
-        assertEquals(11, plane.getSumOfCounts());
+        assertEquals(6, plane.getSumOfCounts());
     }
 }
