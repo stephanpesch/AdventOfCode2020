@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Rules {
 
-    private Map<Bag, List<Bag>> canContain;
+    private Map<Bag, Map<Bag, Integer>> canContain;
 
     public Rules() {
         canContain = new HashMap<>();
@@ -32,7 +32,7 @@ public class Rules {
         rules.addBag(bag);
         for (int i = startIndex; i < lineArray.length; i += indexAdd) {
             if (!"no".equals(lineArray[i])) {
-                rules.addEdge(bag, new Bag(lineArray[i + 1], lineArray[i + 2]));
+                rules.addEdge(bag, new Bag(lineArray[i + 1], lineArray[i + 2]), Integer.parseInt(lineArray[i]));
             }
         }
     }
@@ -53,22 +53,17 @@ public class Rules {
     }
 
     public void addBag(Bag bag) {
-        canContain.putIfAbsent(bag, new ArrayList<>());
+        canContain.putIfAbsent(bag, new HashMap<>());
     }
 
-    public void removeBag(Bag bag) {
-        canContain.values().forEach(e -> e.remove(bag));
-    }
-
-    public void addEdge(Bag outBag, Bag inBag) {
+    public void addEdge(Bag outBag, Bag inBag, int amount) {
         if (!canContain.containsKey(inBag)) {
             addBag(inBag);
         }
-
-        canContain.get(inBag).add(outBag);
+        canContain.get(outBag).put(inBag, amount);
     }
 
-    public List<Bag> getBag(Bag bag) {
+    public Map<Bag, Integer> getBag(Bag bag) {
         return canContain.get(bag);
     }
 
@@ -76,21 +71,32 @@ public class Rules {
         return canContain.keySet();
     }
 
-    public Map<Bag, List<Bag>> getCanContain() {
+    public Map<Bag, Map<Bag, Integer>> getCanContain() {
         return canContain;
     }
 
     public Set<Bag> getContainingBags(Bag bag) {
         // Maybe done wrongly
-        List<Bag> bags = canContain.get(bag);
-        Set<Bag> bagSet = new HashSet<>(bags);
-        for (Bag b : bags) {
+        Map<Bag, Integer> bags = canContain.get(bag);
+        Set<Bag> bagSet = new HashSet<>(bags.keySet());
+        for (Bag b : bags.keySet()) {
             bagSet.addAll(getContainingBags(b));
         }
         return bagSet;
     }
 
-    public int howManyCanContain(Bag bag) {
+    public int amountColorsInBag(Bag bag) {
         return getContainingBags(bag).size();
+    }
+
+    public int amountBagsInBag(Bag bag) {
+        Map<Bag, Integer> bagIntegerMap = canContain.get(bag);
+        int sum = 1;
+        if (!bagIntegerMap.isEmpty()) {
+            for (Bag b : bagIntegerMap.keySet()) {
+                sum += (bagIntegerMap.get(b) * amountBagsInBag(b));
+            }
+        }
+        return sum; // Off by one
     }
 }

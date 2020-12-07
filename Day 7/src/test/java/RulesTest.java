@@ -1,50 +1,62 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 public class RulesTest {
 
     Rules rules = new Rules();
+    Bag lightRed;
+    Bag darkOrange;
+    Bag brightWhite;
+    Bag mutedYellow;
+    Bag shinyGold;
+    Bag darkOlive;
+    Bag vibrantPlum;
+    Bag fadedBlue;
+    Bag dottedBlack;
 
     @Before
     public void initialize() {
-        Bag lightRed = new Bag("light", "red");
-        Bag darkOrange = new Bag("dark", "orange");
-        Bag brightWhite = new Bag("bright", "white");
-        Bag mutedYellow = new Bag("muted", "yellow");
-        Bag shinyGold = new Bag("shiny", "gold");
-        Bag darkOlive = new Bag("dark", "olive");
-        Bag vibrantPlum = new Bag("vibrant", "plum");
-        Bag fadedBlue = new Bag("faded", "blue");
-        Bag dottedBlack = new Bag("dotted", "black");
+        lightRed = new Bag("light", "red");
+        darkOrange = new Bag("dark", "orange");
+        brightWhite = new Bag("bright", "white");
+        mutedYellow = new Bag("muted", "yellow");
+        shinyGold = new Bag("shiny", "gold");
+        darkOlive = new Bag("dark", "olive");
+        vibrantPlum = new Bag("vibrant", "plum");
+        fadedBlue = new Bag("faded", "blue");
+        dottedBlack = new Bag("dotted", "black");
 
         rules.addBag(lightRed);
-        rules.addEdge(lightRed, brightWhite);
-        rules.addEdge(lightRed, mutedYellow);
+        rules.addEdge(lightRed, brightWhite,1);
+        rules.addEdge(lightRed, mutedYellow, 2);
 
         rules.addBag(darkOrange);
-        rules.addEdge(darkOrange, brightWhite);
-        rules.addEdge(darkOrange, mutedYellow);
+        rules.addEdge(darkOrange, brightWhite, 3);
+        rules.addEdge(darkOrange, mutedYellow, 4);
 
         rules.addBag(brightWhite);
-        rules.addEdge(brightWhite, shinyGold);
+        rules.addEdge(brightWhite, shinyGold, 1);
 
         rules.addBag(mutedYellow);
-        rules.addEdge(mutedYellow, shinyGold);
-        rules.addEdge(mutedYellow, fadedBlue);
+        rules.addEdge(mutedYellow, shinyGold, 2);
+        rules.addEdge(mutedYellow, fadedBlue, 9);
 
         rules.addBag(shinyGold);
-        rules.addEdge(shinyGold, darkOlive);
-        rules.addEdge(shinyGold, vibrantPlum);
+        rules.addEdge(shinyGold, darkOlive, 1);
+        rules.addEdge(shinyGold, vibrantPlum, 2);
 
         rules.addBag(darkOlive);
-        rules.addEdge(darkOlive, fadedBlue);
-        rules.addEdge(darkOlive, dottedBlack);
+        rules.addEdge(darkOlive, fadedBlue, 3);
+        rules.addEdge(darkOlive, dottedBlack, 4);
 
         rules.addBag(vibrantPlum);
-        rules.addEdge(vibrantPlum, fadedBlue);
-        rules.addEdge(vibrantPlum, dottedBlack);
+        rules.addEdge(vibrantPlum, fadedBlue, 5);
+        rules.addEdge(vibrantPlum, dottedBlack, 6);
 
         rules.addBag(fadedBlue);
 
@@ -53,6 +65,10 @@ public class RulesTest {
 
     @Test
     public void rulesFromFileEqualInitializedRules() {
-        assertEquals(rules, Rules.getFromFile("testinput"));
+        Map<Bag, Integer> bagIntegerMap = rules.getBag(new Bag("shiny", "gold"));
+        Map<Bag, Integer> referenceMap = new HashMap<>();
+        referenceMap.put(darkOlive, 1);
+        referenceMap.put(vibrantPlum, 2);
+        assertEquals(referenceMap, bagIntegerMap);
     }
 }
