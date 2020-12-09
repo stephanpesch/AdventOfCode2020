@@ -1,24 +1,22 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        List<String[]> instructions = readFile("input");
+        List<String[]> instructions = readFile("testinput");
         int accumulator = 0;
         int lineNumber = 0;
         Set<Integer> linesRead = new HashSet<>();
 
-        while (!linesRead.contains(lineNumber)) {
+        while (!linesRead.contains(lineNumber) && lineNumber < instructions.size()) {
             String operation = instructions.get(lineNumber)[0];
             int argument = Integer.parseInt(instructions.get(lineNumber)[1]);
+            // Adds the current line number to the set so execution can be cancelled
             linesRead.add(lineNumber);
-            System.out.println("Line: " + lineNumber);
+            System.out.printf("Line %d: %s %d%n", lineNumber, operation, argument);
 
             switch (operation) {
                 case "acc":
@@ -30,9 +28,10 @@ public class Main {
                     break;
                 case "nop":
                     lineNumber++;
+                    break;
             }
+            System.out.println("Accumulator: " + accumulator);
         }
-        System.out.println("Accumulator: " + accumulator);
     }
 
     private static List<String[]> readFile(String name) {
